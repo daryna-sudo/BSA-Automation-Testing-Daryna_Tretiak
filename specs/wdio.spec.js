@@ -1,10 +1,10 @@
-const { expect } = require('chai');
-
+//const { expect } = require('chai');
+const assert = require('assert');
 const rundomNumber = () => Date.now();
 
 describe('Registration:', function () {
 
-  it('should be able to register', async function () {
+  xit('should be able to register', async function () {
 
     await browser.setWindowSize(1440, 960);
     await browser.url('/sign-up');
@@ -76,4 +76,27 @@ describe('Registration:', function () {
     
     await browser.reloadSession();
   });
+//log in
+it('should be able to log in', async function() {
+  await browser.url('http://46.101.234.121/sign-in');
+  const emailField = await $ ('input[name="email"]');
+  const passwordField = await $ ('input[name="password"]');
+  const signinButton = await $ ('button');
+  await emailField.setValue('daryska202@gmail.com');
+  await passwordField.setValue('19092012');
+  await signinButton.click();
+  await browser.waitUntil(
+    async function () {
+      const url = await browser.getUrl();
+      return url === 'http://46.101.234.121/doctors';
+    },
+    { timeout: 5000 },
+  );
+
+  const url = await browser.getUrl();
+  expect(url).to.be.eql('http://46.101.234.121/doctors');
+
+  await browser.pause(5000);
+
+});
 });
